@@ -78,10 +78,10 @@ const Index = () => {
                     <View style={styles.bottomSection}>
                         <PrimaryButton
                             title="Se connecter"
-                            color= {Colors.button.primary}
+                            color={Colors.button.primary}
                             onPress=""
                         />
-                        
+
                     </View>
                 </View>
             </KeyboardAwareScrollView>
