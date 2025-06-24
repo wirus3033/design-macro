@@ -1,10 +1,11 @@
 import Checkbox from 'expo-checkbox';
 import React, { useRef, useState } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import CustomTextInput from '../components/ui/CustomTextInputLogin';
 import PrimaryButton from '../components/ui/PrimaryButton';
 import fonts from '../constants/assets/fonts';
+import images from '../constants/assets/images';
 import { Colors } from '../constants/Colors';
 const Index = () => {
 
@@ -35,7 +36,10 @@ const Index = () => {
                 keyboardShouldPersistTaps="handled"
                 extraScrollHeight={120}
             >
-                <View style={{ flex: 1 }}>
+                <View style={{ flex: 1 , justifyContent: 'center', alignItems: 'center'}}>
+                    <View style={styles.logoContainer}>
+                        <Image source={images.logo} style={styles.logo} resizeMode="contain" />
+                    </View>
                     <View style={styles.textConnectionContainer}>
                         <Text style={styles.titleText}>Se connecter</Text>
                     </View>
@@ -83,6 +87,9 @@ const Index = () => {
                         />
 
                     </View>
+                    <View style={styles.versionContainer}>
+                        <Text style={styles.versionText}>v.1.17</Text>
+                    </View>
                 </View>
             </KeyboardAwareScrollView>
 
@@ -95,10 +102,20 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#fff',
     },
+    logoContainer: {
+        width: '100%',
+        height: '20%',
+        alignItems: 'center',
+        backgroundColor: 'yellow',
+    },
+    logo: {
+        height: '100%',
+    },
     textConnectionContainer: {
         width: '100%',
         height: 45,
         alignItems: 'center',
+        backgroundColor: 'red',
     },
     titleText: {
         fontSize: 22,
@@ -113,15 +130,17 @@ const styles = StyleSheet.create({
         borderColor: '#ccc',
         // borderWidth: 1,
         borderRadius: 5,
-        backgroundColor: '#fff',
+        // backgroundColor: '#fff',
         paddingHorizontal: 8,
         paddingVertical: 2,
+        backgroundColor: 'yellow',
     },
     checkboxContainerc: {
         width: '100%',
         alignItems: 'flex-start',
         paddingLeft: '5%',
         marginTop: 6,
+        backgroundColor: 'red',
     },
     checkboxContainer: {
         flexDirection: 'row',
@@ -140,20 +159,19 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         columnGap: 10,
         paddingHorizontal: '8%',
+        backgroundColor: 'yellow',
     },
-    passwordButton: {
-        backgroundColor: '#163E71',
-        height: 42,
-        justifyContent: 'center',
+    versionContainer: {
+        width: '100%',
         alignItems: 'center',
-        flex: 1,
-        borderRadius: 5,
+        marginTop: 16,
+        backgroundColor: 'red',
     },
-    passwordText: {
-        color: '#fff',
-        fontSize: 15,
+    versionText: {
+        color: '#75859D',
+        fontSize: 16,
+        fontFamily: fonts.Montserrat.Regular,
         textAlign: 'center',
-        fontFamily: fonts.Poppins.Bold,
     },
 });
 
