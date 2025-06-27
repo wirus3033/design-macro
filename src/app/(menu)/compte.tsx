@@ -21,18 +21,18 @@ const router = useRouter();
 
 const menuOptions = [
   { id: "1", label: "Modifier profil", icon: "edit", link: "/screen/compte/ChangeProfil" },
-  { id: "2", label: "Changer mot de passe", icon: "lock",link: "/screen/compte/ChangeMotDePasse" },
-  { id: "3", label: "Changer code PIN", icon: "vpn-key" ,link: "/screen/compte/ChangeCodePin"},
-  { id: "4", label: "Notification", icon: "notifications-none" ,link: "/screen/compte/Notification"},
-  { id: "5", label: "Confidentialité", icon: "privacy-tip",link: "/screen/compte/ChangeProfil" },
-  { id: "6", label: "Langue de l'application", icon: "language",link: "/screen/compte/ChangeProfil" },
+  { id: "2", label: "Changer mot de passe", icon: "lock", link: "/screen/compte/ChangeMotDePasse" },
+  { id: "3", label: "Changer code PIN", icon: "vpn-key", link: "/screen/compte/ChangeCodePin" },
+  { id: "4", label: "Notification", icon: "notifications-none", link: "/screen/compte/Notification" },
+  { id: "5", label: "Confidentialité", icon: "privacy-tip", link: "/screen/compte/ChangeProfil" },
+  { id: "6", label: "Langue de l'application", icon: "language", link: "/screen/compte/ChangeProfil" },
 ];
 
 const Compte = () => {
   const handleOptionPress = (link?: string) => {
     if (link) {
       router.replace(link);
-    }else{
+    } else {
       console.log("aucinnnnnn")
     }
   };
@@ -43,22 +43,22 @@ const Compte = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView contentContainerStyle={{ paddingBottom: 100 }}>
-        {/* === HEADER === */}
-        <View style={styles.header}>
-          <Image source={images.paysage} style={styles.headerBackground} />
-          <View style={styles.profileImageWrapper}>
-            <Image source={images.revenu} style={styles.profileImage} />
-          </View>
-        </View>
 
-        {/* === INFOS UTILISATEUR === */}
-        <View style={styles.userInfo}>
-          <Text style={styles.name}>ANDRIAMITONDRA Fredson</Text>
-          <Text style={styles.info}>fredson@email.com</Text>
-          <Text style={styles.info}>+261 34 12 345 67</Text>
+      {/* === HEADER === */}
+      <View style={styles.header}>
+        <Image source={images.paysage} style={styles.headerBackground} />
+        <View style={styles.profileImageWrapper}>
+          <Image source={images.revenu} style={styles.profileImage} />
         </View>
+      </View>
 
+      {/* === INFOS UTILISATEUR === */}
+      <View style={styles.userInfo}>
+        <Text style={styles.name}>ANDRIAMITONDRA Fredson</Text>
+        <Text style={styles.info}>fredson@email.com</Text>
+        <Text style={styles.info}>+261 34 12 345 67</Text>
+      </View>
+      
         {/* === MENU === */}
         <FlatList
           data={menuOptions}
@@ -66,6 +66,7 @@ const Compte = () => {
           scrollEnabled={false}
           contentContainerStyle={styles.menuContainer}
           renderItem={({ item, index }) => (
+            <ScrollView >
             <TouchableOpacity
               style={styles.menuItem}
               onPress={() => handleOptionPress(item.link)}
@@ -78,9 +79,10 @@ const Compte = () => {
                 <View style={styles.divider} />
               )}
             </TouchableOpacity>
+            </ScrollView>
           )}
         />
-      </ScrollView>
+      
 
       {/* === DECONNEXION === */}
       <View style={styles.logoutContainer}>
@@ -172,7 +174,8 @@ const styles = StyleSheet.create({
   },
   logoutContainer: {
     position: "absolute",
-    bottom: 20,
+    marginTop: 10,
+    bottom: 10,
     left: 20,
     right: 20,
   },

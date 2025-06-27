@@ -11,12 +11,10 @@ import {
   Text,
   View,
 } from "react-native";
+import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import PrimaryButton from "../ui/PrimaryButton";
 
 const { width, height } = Dimensions.get("window");
-// const dispatch = useDispatch();
-
-// const globalAppState = useSelector((state: RootState) => state.globalAppState);
 
 type Slide = {
   id: string;
@@ -56,6 +54,7 @@ type OnboardingCarouselProps = {
 const OnboardingCarousel: React.FC<OnboardingCarouselProps> = ({
   onFinish,
 }) => {
+  const insets = useSafeAreaInsets();
   const flatListRef = useRef<FlatList>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const scrollX = useRef(new Animated.Value(0)).current;
@@ -90,83 +89,85 @@ const OnboardingCarousel: React.FC<OnboardingCarouselProps> = ({
   );
 
   return (
-    <View style={[styles.container, { minHeight: hp(100) }]}>
-      {/* Slides */}
-      <Animated.FlatList
-        ref={flatListRef}
-        data={slides}
-        keyExtractor={(item) => item.id}
-        renderItem={renderItem}
-        horizontal
-        pagingEnabled
-        showsHorizontalScrollIndicator={false}
-        onScroll={Animated.event(
-          [{ nativeEvent: { contentOffset: { x: scrollX } } }],
-          { useNativeDriver: false }
-        )}
-        onViewableItemsChanged={onViewRef.current}
-        viewabilityConfig={viewConfigRef.current}
-      />
-
-      {/* Dots fixes en bas */}
-      <View style={styles.pagination}>
-        {slides.map((_, index) => {
-          const inputRange = [
-            (index - 1) * width,
-            index * width,
-            (index + 1) * width,
-          ];
-          const dotOpacity = scrollX.interpolate({
-            inputRange,
-            outputRange: [0.3, 1, 0.3],
-            extrapolate: "clamp",
-          });
-
-          const scale = scrollX.interpolate({
-            inputRange,
-            outputRange: [1, 1.4, 1],
-            extrapolate: "clamp",
-          });
-
-          return (
-            <Animated.View
-              key={index}
-              style={[
-                styles.dot,
-                {
-                  opacity: dotOpacity,
-                  transform: [{ scale }],
-                  backgroundColor: "#c2026d",
-                },
-              ]}
-            />
-          );
-        })}
-      </View>
-       <View style={styles.bottomSection}>
-        <PrimaryButton
-          title={currentIndex === slides.length - 1 ? "Terminer" : "Suivant"}
-          color={Colors.button.primary}
-          onPress={handleNext}
+    <SafeAreaView style={styles.safeArea} edges={["bottom", "left", "right"]}>
+      <View style={[styles.container, { minHeight: hp(100) }]}>
+        <Animated.FlatList
+          ref={flatListRef}
+          data={slides}
+          keyExtractor={(item) => item.id}
+          renderItem={renderItem}
+          horizontal
+          pagingEnabled
+          showsHorizontalScrollIndicator={false}
+          onScroll={Animated.event(
+            [{ nativeEvent: { contentOffset: { x: scrollX } } }],
+            { useNativeDriver: false }
+          )}
+          onViewableItemsChanged={onViewRef.current}
+          viewabilityConfig={viewConfigRef.current}
         />
+
+        {/* Dots fixes en bas */}
+        <View style={styles.pagination}>
+          {slides.map((_, index) => {
+            const inputRange = [
+              (index - 1) * width,
+              index * width,
+              (index + 1) * width,
+            ];
+            const dotOpacity = scrollX.interpolate({
+              inputRange,
+              outputRange: [0.3, 1, 0.3],
+              extrapolate: "clamp",
+            });
+
+            const scale = scrollX.interpolate({
+              inputRange,
+              outputRange: [1, 1.4, 1],
+              extrapolate: "clamp",
+            });
+
+            return (
+              <Animated.View
+                key={index}
+                style={[
+                  styles.dot,
+                  {
+                    opacity: dotOpacity,
+                    transform: [{ scale }],
+                    backgroundColor: "#c2026d",
+                  },
+                ]}
+              />
+            );
+          })}
+        </View>
+        <View style={[styles.bottomSection, { marginBottom: insets.bottom + 8 }]}>
+          <PrimaryButton
+            title={currentIndex === slides.length - 1 ? "Terminer" : "Suivant"}
+            color={Colors.button.primary}
+            onPress={handleNext}
+          />
+        </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
 export default OnboardingCarousel;
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: "white",
+  },
   container: {
     flex: 1,
     backgroundColor: "white",
   },
   slide: {
-    width,
-    // height:"70%",
+    width: width,
     alignItems: "center",
-    // justifyContent: "flex-start",
-    // backgroundColor: "red",
   },
   imageContainer: {
     marginTop: "10%",
@@ -174,7 +175,6 @@ const styles = StyleSheet.create({
     height: height * 0.35,
     borderRadius: 20,
     overflow: "hidden",
-    // backgroundColor: "#f3f3f3",
   },
   image: {
     width: "100%",
@@ -182,23 +182,22 @@ const styles = StyleSheet.create({
   },
   textSection: {
     width: width * 0.9,
-    height: height * 0.35,
+    minHeight: 80,
     marginTop: 20,
     padding: 20,
     borderRadius: 10,
-    backgroundColor: "#eee",
+    // backgroundColor: "#eee",
     alignItems: "center",
   },
   title: {
-    fontSize: width * 0.1,
-    // fontWeight: "bold",
-    marginBottom: 10,
+    fontSize: Math.min(width * 0.08, 30),
     textAlign: "center",
     color: "#000",
     fontFamily: fonts.Poppins.SemiBold,
+    marginBottom: 10,
   },
   description: {
-    fontSize: width * 0.04,
+    fontSize: Math.min(width * 0.04, 18),
     textAlign: "justify",
     color: "#000",
     fontFamily: fonts.Poppins.Light,
@@ -209,9 +208,8 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     marginTop: "5%",
     marginBottom: "5%",
-    // backgroundColor: "red",
-    height:"5%",
-    alignItems:"center"
+    height: "5%",
+    alignItems: "center",
   },
   dot: {
     height: 7,
@@ -221,9 +219,8 @@ const styles = StyleSheet.create({
   },
   bottomSection: {
     width: "100%",
-    height: "7%",
+    height: 56,
     paddingHorizontal: "8%",
-    marginBottom: "15%",
-    // backgroundColor: "red",
+    justifyContent: "center",
   },
 });

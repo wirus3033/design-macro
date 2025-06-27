@@ -39,7 +39,7 @@ const ChangeProfil = () => {
         style={{ flex: 1 }}
         contentContainerStyle={{ flexGrow: 1 }}
         keyboardShouldPersistTaps="handled"
-        extraScrollHeight={40}
+        extraScrollHeight={60}
         scrollEventThrottle={16}
       >
         <View style={{ flex: 1, minHeight: heigth }}>
