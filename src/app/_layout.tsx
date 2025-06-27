@@ -101,7 +101,7 @@ export default function Layout() {
   };
 
   // console.log('dppiiiiii:',responsiveFontSize(18))
-  // console.log("Veritale valueheight : ", heightPercent(275))
+  console.log("Veritale valueheight : ", heightPercent(57))
   // console.log("Veritale valueheight : ", heightPercent(275))
   // console.log("Veritale valuewidth : ", widthPercent(337))
   // console.log('Veritale valueFFFFhh : ', heightPercentParent(540, 42));

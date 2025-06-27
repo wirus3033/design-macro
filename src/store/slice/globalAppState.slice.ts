@@ -4,8 +4,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 const initialState: GlobalAppState = {
   isDrawerOpen: false,
-  imei: '',
-  needSync: false,
+  firstLance:false
 };
 
 const menuState = createSlice({
@@ -15,9 +14,6 @@ const menuState = createSlice({
     setGlobalAppState(_, action: PayloadAction<GlobalAppState>) {
       return action.payload;
     },
-    // setNewGlobalAppState(state, action: PayloadAction<GlobalAppState>) {
-    //   return { ...state, ...action.payload };
-    // },
 
     resetGlobalAppState() {
       return initialState;

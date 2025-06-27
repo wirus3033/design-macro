@@ -1,7 +1,6 @@
 export interface GlobalAppState {
   isDrawerOpen: boolean;
-  imei?: string;
-  needSync: boolean;
+  firstLance:boolean;
 }
 
 export interface MenuState {
